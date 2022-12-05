@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author ZangNa
@@ -48,6 +49,15 @@ public class PaymentController {
 		}
 		log.info("查询成功");
 		return new CommonResult(200,"查询成功,端口号是："+serverPort,payment);
+	}
+
+	@GetMapping(value = "/payment/feign/timeout")
+	public String paymentFeignTimeOut()
+	{
+		System.out.println("*****paymentFeignTimeOut from port: "+serverPort);
+		//暂停几秒钟线程
+		try { TimeUnit.SECONDS.sleep(3); } catch (InterruptedException e) { e.printStackTrace(); }
+		return serverPort;
 	}
 
 }

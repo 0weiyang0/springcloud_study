@@ -4,12 +4,14 @@ import com.atguigu.springcloud.entities.CommonResult;
 import com.atguigu.springcloud.entities.Payment;
 import com.atguigu.springcloud.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author ZangNa
@@ -22,6 +24,9 @@ public class PaymentController {
 
 	@Resource
 	private PaymentService paymentService;
+
+	@Value("${server.port}")
+	private String serverPort;
 
 	@PostMapping("/payment/create")
 	public CommonResult create(Payment payment){
@@ -45,5 +50,15 @@ public class PaymentController {
 		log.info("查询成功");
 		return new CommonResult(200,"查询成功",payment);
 	}
+
+
+	@GetMapping(value = "/payment/feign/timeout")
+	public String paymentFeignTimeOut() {
+		System.out.println("*****paymentFeignTimeOut from port: "+serverPort);
+		//暂停几秒钟线程
+		try { TimeUnit.SECONDS.sleep(3); } catch (InterruptedException e) { e.printStackTrace(); }
+		return serverPort;
+	}
+
 
 }
