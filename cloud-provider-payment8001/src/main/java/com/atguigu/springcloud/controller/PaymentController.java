@@ -51,6 +51,11 @@ public class PaymentController {
 		return new CommonResult(200,"查询成功",payment);
 	}
 
+	@GetMapping("/lb/payment/get/{id}")
+	public CommonResult getPaymentByIdLb(@PathVariable("id") Long id){
+		return new CommonResult(200,"查询成功",serverPort);
+	}
+
 
 	@GetMapping(value = "/payment/feign/timeout")
 	public String paymentFeignTimeOut() {
