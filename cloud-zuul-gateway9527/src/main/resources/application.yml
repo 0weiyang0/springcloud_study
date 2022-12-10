@@ -14,3 +14,4 @@ eureka:
     instance-id: gateway-9527.com
     prefer-ip-address: true
 
+
